@@ -429,8 +429,19 @@ class Program(customtkinter.CTk):
         self.main_screen_result_entry.delete("0", tkinter.END)
         self.main_screen_result_entry.configure(state="disabled") 
 
-    def __mode_option__(self) -> None:  
-        self.main_screen_mode_option: Menu_Option = Menu_Option()
+    def __mode_option__(self) -> None:
+        try:  
+            self.main_screen_mode_option: Menu_Option = Menu_Option()
+
+        except ImportError:
+            if language_data == "Српски":
+                showerror(title="Грешка", message="Нема те фајл са подешавањима")
+
+            elif language_data == "English":
+                showerror(title="Error", message="You don't have settings file")
+
+            else:
+                showerror(title="Ошибка", message="У вас нет файла с настройками")
                                                                                      
     def __change_base__(self, configure: str) -> None:
         self.main_screen_count_system_result: str
@@ -552,7 +563,7 @@ class Menu_Option(customtkinter.CTkToplevel):
 
 class Scientific_calculator_additional_layout(customtkinter.CTkToplevel):
      
-    WIDTH: int = 700 
+    WIDTH: int = 965 
     HEIGHT: int = 411
     WINDOW: str = "-toolwindow"
     TITLE: str = "My Calculus scientific calculator additional layout"
@@ -569,25 +580,25 @@ class Scientific_calculator_additional_layout(customtkinter.CTkToplevel):
         self.main_screen_functions_text.place(x=2, y=0)
 
         self.main_screen_logarith_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="logyX", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("log(x,y)"))
-        self.main_screen_logarith_function_button.place(x=2, y=55)
+        self.main_screen_logarith_function_button.place(x=2, y=62)
         
         self.main_screen_natural_logarith_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="ln", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("log()"))
-        self.main_screen_natural_logarith_function_button.place(x=72, y=55)
+        self.main_screen_natural_logarith_function_button.place(x=72, y=62)
 
         self.main_screen_e_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="eX", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("e**"))
-        self.main_screen_e_function_button.place(x=142, y=55)
+        self.main_screen_e_function_button.place(x=142, y=62)
 
         self.main_screen_root_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="y\/X", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("xyrt(number, x, y)"))
-        self.main_screen_root_function_button.place(x=212, y=55)
+        self.main_screen_root_function_button.place(x=212, y=62)
 
         self.main_screen_number_in_y_degree_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="xY", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("**"))
-        self.main_screen_number_in_y_degree_function_button.place(x=282, y=55)
+        self.main_screen_number_in_y_degree_function_button.place(x=282, y=62)
 
         self.main_screen_two_in_x_degree_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="2X", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("2**"))
-        self.main_screen_two_in_x_degree_function_button.place(x=352, y=55)
+        self.main_screen_two_in_x_degree_function_button.place(x=352, y=62)
 
         self.main_screen_ten_in_x_degree_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="10X", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("10**"))
-        self.main_screen_ten_in_x_degree_function_button.place(x=422, y=55)
+        self.main_screen_ten_in_x_degree_function_button.place(x=422, y=62)
 
         self.main_screen_trigonomical_functions_text: customtkinter.CTkLabel = customtkinter.CTkLabel(master=self, text="Trigonomical functions", text_color=text_color, font=("Roman", 55))
         self.main_screen_trigonomical_functions_text.place(x=2, y=110)
@@ -674,40 +685,40 @@ class Graphical_claculator_adittional_layout(customtkinter.CTkToplevel):
         self.attributes(self.WINDOW, True)
 
         self.main_screen_functions_text: customtkinter.CTkLabel = customtkinter.CTkLabel(master=self, text="Functions", text_color=text_color, font=("Roman", 55))
-        self.main_screen_functions_text.place(x=2, y=2)
+        self.main_screen_functions_text.place(x=2, y=0)
         
         self.main_screen_logarith_base_2_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="log2", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("numpy.log2()"))
-        self.main_screen_logarith_base_2_function_button.place(x=0, y=65)
+        self.main_screen_logarith_base_2_function_button.place(x=0, y=70)
 
         self.main_screen_ln_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="ln", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("numpy.log()"))
-        self.main_screen_ln_function_button.place(x=72, y=65)
+        self.main_screen_ln_function_button.place(x=72, y=70)
         
         self.main_screen_logarith_base_10_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="log10", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("numpy.log10()"))
-        self.main_screen_logarith_base_10_function_button.place(x=142, y=65)
+        self.main_screen_logarith_base_10_function_button.place(x=142, y=70)
 
         self.main_screen_e_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="eX", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("e**"))
-        self.main_screen_e_function_button.place(x=212, y=65)
+        self.main_screen_e_function_button.place(x=212, y=70)
 
         self.main_screen_sqrt_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="\/", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("numpy.sqrt()"))
-        self.main_screen_sqrt_function_button.place(x=282, y=65)
+        self.main_screen_sqrt_function_button.place(x=282, y=70)
 
         self.main_screen_number_in_y_degree_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="xY", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("**"))
-        self.main_screen_number_in_y_degree_function_button.place(x=352, y=65)
+        self.main_screen_number_in_y_degree_function_button.place(x=352, y=70)
 
         self.main_screen_two_in_x_degree_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="2X", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("2**"))
-        self.main_screen_two_in_x_degree_function_button.place(x=422, y=65)
+        self.main_screen_two_in_x_degree_function_button.place(x=422, y=70)
 
         self.main_screen_ten_in_x_degree_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="10X", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("10**"))
-        self.main_screen_ten_in_x_degree_function_button.place(x=492, y=65)
+        self.main_screen_ten_in_x_degree_function_button.place(x=492, y=70)
 
         self.main_screen_module_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="|X|", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("numpy.fabs()"))
-        self.main_screen_module_function_button.place(x=562, y=65)
+        self.main_screen_module_function_button.place(x=562, y=70)
 
         self.main_screen_sin_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="sin", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("numpy.sin()"))
-        self.main_screen_sin_function_button.place(x=632, y=65)
+        self.main_screen_sin_function_button.place(x=632, y=70)
 
         self.main_screen_cos_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text="cos", height=50, width=70, fg_color=button_color, text_color=text_color, font=("Roman", 25), command=lambda: program.__button_operation__("numpy.cos()"))
-        self.main_screen_cos_function_button.place(x=702, y=65)  
+        self.main_screen_cos_function_button.place(x=702, y=70)  
         
         if language_data == "Српски":
             self.main_screen_functions_text.configure(text="Функције")
