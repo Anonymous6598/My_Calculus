@@ -23,7 +23,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
     ICON: typing.Final[str] = f"my calculus icon.ico"
     WIDGET_SCALING: typing.Final[float] = 1.251
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self: typing.Self, *args, **kwargs) -> None:
         customtkinter.CTk.__init__(self, *args, **kwargs)
 
         customtkinter.set_widget_scaling(self.WIDGET_SCALING)
@@ -151,7 +151,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
                 self.main_screen_mode_button.configure(text=f"режим")
 
     @typing.override
-    def __classical__(self) -> None:
+    def __classical__(self: typing.Self) -> None:
         self.main_screen_expression_entry.configure(height=120)
         self.main_screen_equal_button.configure(command=self.__equation__)
 
@@ -211,7 +211,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_x_button.grid_forget()
 
     @typing.override
-    def __scientific__(self) -> None: 
+    def __scientific__(self: typing.Self) -> None: 
         self.main_screen_expression_entry.configure(height=120) 
         self.main_screen_equal_button.configure(command=self.__equation__)
         
@@ -321,7 +321,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_x_button.grid_forget()
     
     @typing.override
-    def __graphical__(self) -> None:
+    def __graphical__(self: typing.Self) -> None:
         self.main_screen_expression_entry.configure(height=195)
         self.main_screen_equal_button.configure(command=self.__plot__)
 
@@ -377,7 +377,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_graphical_calculator_additional_layout: Graphical_claculator_adittional_layout = Graphical_claculator_adittional_layout()
 
     @typing.override
-    def __button_operation__(self, button: str) -> None:
+    def __button_operation__(self: typing.Self, button: str) -> None:
         self.button: str = button
         self.main_screen_expression_entry_data: str = self.main_screen_expression_entry.get()
         match self.main_screen_expression_entry_data:
@@ -398,7 +398,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
                 self.main_screen_expression_entry.insert(f"0", f"{self.main_screen_expression_entry_data + self.button}")
      
     @typing.override
-    def __equation__(self) -> None:
+    def __equation__(self: typing.Self) -> None:
         self.main_screen_expression_entry_data: str = self.main_screen_expression_entry.get()
         self.main_screen_result: str = eval(f"{self.main_screen_expression_entry_data}")
 
@@ -414,7 +414,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_result_entry.configure(state=f"disabled")
 
     @typing.override
-    def __clear_everything__(self) -> None:
+    def __clear_everything__(self: typing.Self) -> None:
         self.main_screen_expression_entry.delete(f"0", tkinter.END)
 
         self.main_screen_result_entry.configure(state=f"normal")
@@ -422,11 +422,11 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_result_entry.configure(state=f"disabled") 
 
     @typing.override
-    def __mode_option__(self) -> None:
+    def __mode_option__(self: typing.Self) -> None:
         self.main_screen_mode_option: Menu_Option = Menu_Option()
     
     @typing.override
-    def __change_base__(self, configure: str) -> None:
+    def __change_base__(self: typing.Self, configure: str | None = None) -> None:
         self.main_screen_count_system_result: str
         self.main_screen_expression_entry_data: str = self.main_screen_expression_entry.get()
         self.main_screen_base_data: str = self.main_screen_base_option.get()
@@ -467,7 +467,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_result_entry.configure(state=f"disabled")
     
     @typing.override
-    def __plot__(self) -> None:
+    def __plot__(self: typing.Self) -> None:
         matplotlib.pyplot.style.use(f"_mpl-gallery")
         matplotlib.pyplot.title(f"My Calculus graphical calculator")
         
@@ -480,7 +480,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         matplotlib.pyplot.show()
 
     @typing.override
-    def __settings__(self) -> None:
+    def __settings__(self: typing.Self) -> None:
         import My_Calculus_settings_menu
         
         try:
@@ -497,8 +497,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
                 case _:
                     tkinter.messagebox.showerror(title=f"Ошибка", message=f"У вас нет файла с настройками")
        
-    @functools.cache
-    def __run__(self) -> None:
+    def __run__(self: typing.Self) -> None:
         try: self.mainloop()
             
         except FileNotFoundError: tkinter.messagebox.showerror(title=f"file not found error", message=f"срб: грешка: није нађен фајл \n eng: error: missing data file \nрус: ошибка: не найден файл")
@@ -515,7 +514,7 @@ class Menu_Option(customtkinter.CTkToplevel):
     WINDOW: typing.Final[str] = f"-toolwindow"
     TITLE: typing.Final[str] = f"My Calculus menu option"
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self: typing.Self, *args, **kwargs) -> None:
         customtkinter.CTkToplevel.__init__(self, *args, **kwargs)
 
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
@@ -568,7 +567,7 @@ class Scientific_calculator_additional_layout(customtkinter.CTkToplevel):
     WINDOW: typing.Final[str] = f"-toolwindow"
     TITLE: typing.Final[str] = f"My Calculus scientific calculator additional layout"
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self: typing.Self, *args, **kwargs) -> None:
         customtkinter.CTkToplevel.__init__(self, *args, **kwargs)
 
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
@@ -677,7 +676,7 @@ class Graphical_claculator_adittional_layout(customtkinter.CTkToplevel):
     WINDOW: typing.Final[str] = f"-toolwindow"
     TITLE: typing.Final[str] = f"My Calculus graphical calculator additional layout"
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self: typing.Self, *args, **kwargs) -> None:
         customtkinter.CTkToplevel.__init__(self, *args, **kwargs)
 
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
