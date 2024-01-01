@@ -18,7 +18,7 @@ class Settings_window(customtkinter.CTkToplevel, My_Calculus_settings_window_int
     TITLE: typing.Final[str] = f"My Calculus settings window"
     WINDOW: typing.Final[str] = f"-toolwindow"
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self: typing.Self, *args, **kwargs) -> None:
         customtkinter.CTkToplevel.__init__(self, *args, **kwargs)
 
         self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
@@ -110,7 +110,7 @@ class Settings_window(customtkinter.CTkToplevel, My_Calculus_settings_window_int
                 self.main_screen_settings_customatization_button_color_text.configure(text="Цвет кнопки")
 
     @typing.override
-    def __language_settings__(self, pickle_serializer: pickle) -> None:
+    def __language_settings__(self: typing.Self, pickle_serializer: pickle) -> None:
         self.main_screen_settings_language_option_data: str = self.main_screen_settings_language_option.get()
         with open(f"my_calculus_settings.pickle", f"wb+") as self.data: pickle.dump(self.main_screen_settings_language_option_data, self.data)
 
@@ -122,7 +122,7 @@ class Settings_window(customtkinter.CTkToplevel, My_Calculus_settings_window_int
             case _: tkinter.messagebox.showwarning(title=f"Внимание", message=f"Перезагрузите программу")
     
     @typing.override
-    def __change_text_color__(self, pickle_serializer: pickle) -> None:
+    def __change_text_color__(self: typing.Self, pickle_serializer: pickle) -> None:
         self.main_screen_settings_customatization_text_color_option_data: str = self.main_screen_settings_customatization_text_color_option.get()
         with open(f"my_calculus_text_color.pickle", f"wb+") as self.text_color_data: pickle.dump(self.main_screen_settings_customatization_text_color_option_data, self.text_color_data)            
 
@@ -134,7 +134,7 @@ class Settings_window(customtkinter.CTkToplevel, My_Calculus_settings_window_int
             case _: tkinter.messagebox.showwarning(title=f"Внимание", message=f"Перезагрузите программу")
 
     @typing.override
-    def __change_expression_entry_color__(self, pickle_serialization: pickle) -> None:
+    def __change_expression_entry_color__(self: typing.Self, pickle_serialization: pickle) -> None:
         self.main_screen_settings_customatization_expression_entry_color_option_data: str = self.main_screen_settings_customatization_expression_entry_color_option.get()
         with open(f"my_calculus_expression_entry_color.pickle", f"wb+") as self.expression_entry_color_data: pickle.dump(self.main_screen_settings_customatization_expression_entry_color_option_data, self.expression_entry_color_data)
 
@@ -146,7 +146,7 @@ class Settings_window(customtkinter.CTkToplevel, My_Calculus_settings_window_int
             case _: tkinter.messagebox.showwarning(title=f"Внимание", message=f"Перезагрузите программу")
 
     @typing.override
-    def __change_expression_entry_text_color__(self, pickle_serialization: pickle) -> None:
+    def __change_expression_entry_text_color__(self: typing.Self, pickle_serialization: pickle) -> None:
         self.main_screen_settings_customatization_expression_entry_text_color_option_data: str = self.main_screen_settings_customatization_expression_entry_text_color_option.get()
         with open(f"my_calculus_expression_entry_text_color.pickle", f"wb+") as self.expression_entry_text_color_data: pickle.dump(self.main_screen_settings_customatization_expression_entry_text_color_option_data, self.expression_entry_text_color_data)
 
@@ -158,7 +158,7 @@ class Settings_window(customtkinter.CTkToplevel, My_Calculus_settings_window_int
             case _: tkinter.messagebox.showwarning(title=f"Внимание", message=f"Перезагрузите программу")
 
     @typing.override
-    def __change_button_color__(self, pickle_serialization: pickle) -> None:
+    def __change_button_color__(self: typing.Self, pickle_serialization: pickle) -> None:
         self.main_screen_settings_customatization_button_color_option_data: str = self.main_screen_settings_customatization_button_color_option.get()
         with open(f"my_calculus_button_color.pickle", f"wb+") as self.button_color_data: pickle.dump(self.main_screen_settings_customatization_button_color_option_data, self.button_color_data)
 
