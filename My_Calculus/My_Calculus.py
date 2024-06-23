@@ -1,8 +1,7 @@
 from math import *
+from My_Calculus_AI_window import My_Calculus_AI_window
 from My_Calculus_math_functions import *
-import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, functools, typing, My_Calculus_interface
-
-with open(f"my_calculus_settings.pickle", f"rb+") as data: language_data: str = pickle.load(data)
+import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, My_Calculus_AI
 
 with open(f"my_calculus_text_color.pickle", f"rb+") as text_color_data: text_color: str = pickle.load(text_color_data)
 
@@ -140,17 +139,12 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
         self.main_screen_x_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"x", height=50, width=60, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=lambda: self.__button_operation__(f"x"))        
 
-        match language_data:
-            case "Српски":
-                self.main_screen_mode_button.configure(text=f"режим")
+        if locale.getdefaultlocale()[0] == f"sr_RS": self.main_screen_mode_button.configure(text=f"режим")
 
-            case "English":
-                self.main_screen_mode_button.configure(text=f"mode")
+        elif locale.getdefaultlocale()[0] == f"ru_RU": self.main_screen_mode_button.configure(text=f"режим")
 
-            case _:
-                self.main_screen_mode_button.configure(text=f"режим")
+        else: self.main_screen_mode_button.configure(text=f"mode")
 
-    @typing.override
     def __classical__(self: typing.Self) -> None:
         self.main_screen_expression_entry.configure(height=120)
         self.main_screen_equal_button.configure(command=self.__equation__)
@@ -210,7 +204,6 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_base_option.place_forget()
         self.main_screen_x_button.grid_forget()
 
-    @typing.override
     def __scientific__(self: typing.Self) -> None: 
         self.main_screen_expression_entry.configure(height=120) 
         self.main_screen_equal_button.configure(command=self.__equation__)
@@ -266,8 +259,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
         self.main_screen_scientific_calculator_additional_layout: Scientific_calculator_additional_layout = Scientific_calculator_additional_layout()
 
-    @typing.override
-    def __programming__(self) -> None:
+    def __programming__(self: typing.Self) -> None:
         self.main_screen_expression_entry.configure(height=120)
         self.main_screen_equal_button.configure(command=self.__equation__)
         
@@ -320,7 +312,6 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_equal_button.grid_forget()
         self.main_screen_x_button.grid_forget()
     
-    @typing.override
     def __graphical__(self: typing.Self) -> None:
         self.main_screen_expression_entry.configure(height=195)
         self.main_screen_equal_button.configure(command=self.__plot__)
@@ -376,7 +367,6 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
         self.main_screen_graphical_calculator_additional_layout: Graphical_claculator_adittional_layout = Graphical_claculator_adittional_layout()
 
-    @typing.override
     def __button_operation__(self: typing.Self, button: str) -> None:
         self.button: str = button
         self.main_screen_expression_entry_data: str = self.main_screen_expression_entry.get()
@@ -386,34 +376,30 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
                 self.main_screen_result_entry.configure(state=f"normal")
                 self.main_screen_result_entry.delete(f"0", tkinter.END)
-                match language_data:
-                    case "Српски": self.main_screen_result_entry.insert(f"0", f"резултат је {self.main_screen_result}")
+                if locale.getdefaultlocale()[0] == f"sr_RS": self.main_screen_result_entry.insert(f"0", f"результат {self.main_screen_result}")
 
-                    case "English" :self.main_screen_result_entry.insert(f"0", f"result is {self.main_screen_result}")
-            
-                    case _: self.main_screen_result_entry.insert(f"0", f"результат {self.main_screen_result}")
+                elif locale.getdefaultlocale()[0] == f"ru_RU": self.main_screen_result_entry.insert(f"0", f"результат {self.main_screen_result}")
+
+                else: self.main_screen_result_entry.insert(f"0", f"result is {self.main_screen_result}")
                         
             case _:
                 self.main_screen_expression_entry.delete(f"0", tkinter.END)
                 self.main_screen_expression_entry.insert(f"0", f"{self.main_screen_expression_entry_data + self.button}")
      
-    @typing.override
     def __equation__(self: typing.Self) -> None:
         self.main_screen_expression_entry_data: str = self.main_screen_expression_entry.get()
         self.main_screen_result: str = eval(f"{self.main_screen_expression_entry_data}")
 
         self.main_screen_result_entry.configure(state=f"normal")
         self.main_screen_result_entry.delete(f"0", tkinter.END)
-        match language_data:
-            case "Српски": self.main_screen_result_entry.insert(f"0", f"резултат је {self.main_screen_result}")
+        if locale.getdefaultlocale()[0] == f"sr_RS": self.main_screen_result_entry.insert(f"0", f"резултат је {self.main_screen_result}")
 
-            case "English": self.main_screen_result_entry.insert(f"0", f"result is {self.main_screen_result}")
-            
-            case _: self.main_screen_result_entry.insert(f"0", f"результат {self.main_screen_result}")
+        elif locale.getdefaultlocale()[0] == f"ru_RU": self.main_screen_result_entry.insert(f"0", f"результат {self.main_screen_result}")
+
+        else: self.main_screen_result_entry.insert(f"0", f"result is {self.main_screen_result}")
             
         self.main_screen_result_entry.configure(state=f"disabled")
 
-    @typing.override
     def __clear_everything__(self: typing.Self) -> None:
         self.main_screen_expression_entry.delete(f"0", tkinter.END)
 
@@ -421,12 +407,10 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_result_entry.delete(f"0", tkinter.END)
         self.main_screen_result_entry.configure(state=f"disabled") 
 
-    @typing.override
     def __mode_option__(self: typing.Self) -> None:
         self.main_screen_mode_option: Menu_Option = Menu_Option()
     
-    @typing.override
-    def __change_base__(self: typing.Self, configure: str | None = None) -> None:
+    def __change_base__(self: typing.Self, configure: str) -> None:
         self.main_screen_count_system_result: str
         self.main_screen_expression_entry_data: str = self.main_screen_expression_entry.get()
         self.main_screen_base_data: str = self.main_screen_base_option.get()
@@ -457,16 +441,14 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
         self.main_screen_result_entry.configure(state=f"normal")
         self.main_screen_result_entry.delete(f"0", tkinter.END)
-        match language_data:
-            case "Српски": self.main_screen_result_entry.insert("0", f"резултат је {self.main_screen_count_system_result}")
+        if locale.getdefaultlocale()[0] == f"sr_RS": self.main_screen_result_entry.insert("0", f"резултат је {self.main_screen_count_system_result}")
 
-            case "English": self.main_screen_result_entry.insert("0", f"result is {self.main_screen_count_system_result}")
-            
-            case _: self.main_screen_result_entry.insert("0", f"результат {self.self.main_screen_count_system_result}")
+        elif locale.getdefaultlocale()[0] == f"ru_RU": self.main_screen_result_entry.insert("0", f"результат {self.main_screen_count_system_result}")
+
+        else: self.main_screen_result_entry.insert("0", f"result is {self.main_screen_count_system_result}")
             
         self.main_screen_result_entry.configure(state=f"disabled")
     
-    @typing.override
     def __plot__(self: typing.Self) -> None:
         matplotlib.pyplot.style.use(f"_mpl-gallery")
         matplotlib.pyplot.title(f"My Calculus graphical calculator")
@@ -478,29 +460,21 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         matplotlib.pyplot.plot(x, y, linewidth=1.0)
 
         matplotlib.pyplot.show()
+        
+    def __ai_window__(self: typing.Self) -> None:
+        import My_Calculus_AI_window
+        
+        self.main_screen_ai_window: My_Calculus_AI_window.My_Calculus_AI_window = My_Calculus_AI_window.My_Calculus_AI_window()
 
-    @typing.override
     def __settings__(self: typing.Self) -> None:
         import My_Calculus_settings_menu
         
-        try:
-            self.main_screen_settings_window: My_Calculus_settings_menu.Settings_window = My_Calculus_settings_menu.Settings_window()
-    
-        except ImportError:
-            match language_data: 
-                case "Српски":
-                    tkinter.messagebox.showerror(title=f"Грешка", message=f"Нема те фајл са подешавањима")
-
-                case "English":
-                    tkinter.messagebox.showerror(title=f"Error", message=f"You don't have settings file")
-
-                case _:
-                    tkinter.messagebox.showerror(title=f"Ошибка", message=f"У вас нет файла с настройками")
+        self.main_screen_settings_window: My_Calculus_settings_menu.Settings_window = My_Calculus_settings_menu.Settings_window()
        
     def __run__(self: typing.Self) -> None:
         try: self.mainloop()
             
-        except FileNotFoundError: tkinter.messagebox.showerror(title=f"file not found error", message=f"срб: грешка: није нађен фајл \n eng: error: missing data file \nрус: ошибка: не найден файл")
+        except FileNotFoundError: tkinter.messagebox.showerror(title=f"file not found error", message=f"срб: грешка: није нађен фајл \neng: error: missing data file \nрус: ошибка: не найден файл")
         
         except tkinter.TclError: tkinter.messagebox.showerror(title=f"icon file not found error", message=f"срб: грешка: није нађен фајл иконица \neng: error: missing icon file \nрус: ошибка: не найден файл с иконкой")
         
@@ -510,9 +484,9 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 class Menu_Option(customtkinter.CTkToplevel):
 
     WIDTH: typing.Final[int] = 300
-    HEIGHT: typing.Final[int] = 300
-    WINDOW: typing.Final[str] = f"-toolwindow"
-    TITLE: typing.Final[str] = f"My Calculus menu option"
+    HEIGHT: typing.Final[int] = 350
+    TITLE: typing.Final[str] = f"Menu"
+    ICON: typing.Final[str] = f"my calculus icon.ico"
 
     def __init__(self: typing.Self, *args, **kwargs) -> None:
         customtkinter.CTkToplevel.__init__(self, *args, **kwargs)
@@ -520,7 +494,7 @@ class Menu_Option(customtkinter.CTkToplevel):
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
         self.resizable(False, False)
         self.title(self.TITLE)
-        self.attributes(self.WINDOW, True)
+        self.after(250, lambda: self.iconbitmap(self.ICON))
 
         self.main_screen_classical_mode_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"класични", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__classical__)
         self.main_screen_classical_mode_button.grid(column=0, row=0)
@@ -534,38 +508,40 @@ class Menu_Option(customtkinter.CTkToplevel):
         self.main_screen_graphical_mode_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"графички", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__graphical__)
         self.main_screen_graphical_mode_button.grid(column=0, row=3)
 
+        self.main_screen_ai_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"AI", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__ai_window__)
+        self.main_screen_ai_button.grid(column=0, row=4)
+        
         self.main_screen_settings_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"подешавања", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__settings__)
-        self.main_screen_settings_button.grid(column=0, row=4)
+        self.main_screen_settings_button.grid(column=0, row=5)
 
-        match language_data: 
-            case "Српски":
-                self.main_screen_classical_mode_button.configure(text=f"класични")
-                self.main_screen_scientific_mode_button.configure(text=f"научни")
-                self.main_screen_programming_mode_button.configure(text=f"програмерски")
-                self.main_screen_graphical_mode_button.configure(text=f"графички")
-                self.main_screen_settings_button.configure(text=f"подешавања")
+        if locale.getdefaultlocale()[0] == f"sr_RS":
+           self.main_screen_classical_mode_button.configure(text=f"класични")
+           self.main_screen_scientific_mode_button.configure(text=f"научни")
+           self.main_screen_programming_mode_button.configure(text=f"програмерски")
+           self.main_screen_graphical_mode_button.configure(text=f"графички")
+           self.main_screen_settings_button.configure(text=f"подешавања")
 
-            case "English":
-                self.main_screen_classical_mode_button.configure(text=f"classic")
-                self.main_screen_scientific_mode_button.configure(text=f"scientific")
-                self.main_screen_programming_mode_button.configure(text=f"programming")
-                self.main_screen_graphical_mode_button.configure(text=f"graphical")
-                self.main_screen_settings_button.configure(text=f"settings")
+        elif locale.getdefaultlocale()[0] == f"ru_RU":
+            self.main_screen_classical_mode_button.configure(text=f"классический")
+            self.main_screen_scientific_mode_button.configure(text=f"научный")
+            self.main_screen_programming_mode_button.configure(text=f"программный")
+            self.main_screen_graphical_mode_button.configure(text=f"графический")
+            self.main_screen_settings_button.configure(text=f"настройки")
 
-            case _:
-                self.main_screen_classical_mode_button.configure(text=f"классический")
-                self.main_screen_scientific_mode_button.configure(text=f"научный")
-                self.main_screen_programming_mode_button.configure(text=f"программный")
-                self.main_screen_graphical_mode_button.configure(text=f"графический")
-                self.main_screen_settings_button.configure(text=f"настройки")
+        else:
+           self.main_screen_classical_mode_button.configure(text=f"classic")
+           self.main_screen_scientific_mode_button.configure(text=f"scientific")
+           self.main_screen_programming_mode_button.configure(text=f"programming")
+           self.main_screen_graphical_mode_button.configure(text=f"graphical")
+           self.main_screen_settings_button.configure(text=f"settings")
             
 
 class Scientific_calculator_additional_layout(customtkinter.CTkToplevel):
      
     WIDTH: typing.Final[int] = 965 
     HEIGHT: typing.Final[int] = 411
-    WINDOW: typing.Final[str] = f"-toolwindow"
     TITLE: typing.Final[str] = f"My Calculus scientific calculator additional layout"
+    ICON: typing.Final[str] = f"my calculus icon.ico"
 
     def __init__(self: typing.Self, *args, **kwargs) -> None:
         customtkinter.CTkToplevel.__init__(self, *args, **kwargs)
@@ -573,7 +549,7 @@ class Scientific_calculator_additional_layout(customtkinter.CTkToplevel):
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
         self.resizable(False, False)
         self.title(self.TITLE)
-        self.attributes(self.WINDOW, True)
+        self.after(250, lambda: self.iconbitmap(self.ICON))
 
         self.main_screen_functions_text: customtkinter.CTkLabel = customtkinter.CTkLabel(master=self, text=f"Функције", text_color=text_color, font=(f"Roboto Bold", 55))
         self.main_screen_functions_text.place(x=2, y=0)
@@ -656,25 +632,24 @@ class Scientific_calculator_additional_layout(customtkinter.CTkToplevel):
         self.main_screen_radian_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"rad", height=50, width=70, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=lambda: program.__button_operation__(f"radians()"))
         self.main_screen_radian_function_button.place(x=242, y=277)
         
-        match language_data: 
-            case "Српски":
-                self.main_screen_functions_text.configure(text=f"Функције")
-                self.main_screen_trigonomical_functions_text.configure(text=f"Тригонометричке функције")
+        if locale.getdefaultlocale()[0] == f"sr_RS":
+           self.main_screen_functions_text.configure(text=f"Функције")
+           self.main_screen_trigonomical_functions_text.configure(text=f"Тригонометричке функције")
 
-            case "English":
-                self.main_screen_functions_text.configure(text=f"Functions")
-                self.main_screen_trigonomical_functions_text.configure(text=f"Trigonometric functions")
+        elif locale.getdefaultlocale()[0] == f"ru_RU":
+            self.main_screen_functions_text.configure(text=f"Функции")
+            self.main_screen_trigonomical_functions_text.configure(text=f"Тригонометрические функции")
 
-            case _:
-                self.main_screen_functions_text.configure(text=f"Функции")
-                self.main_screen_trigonomical_functions_text.configure(text=f"Тригонометрические функции")
+        else:
+            self.main_screen_functions_text.configure(text=f"Functions")
+            self.main_screen_trigonomical_functions_text.configure(text=f"Trigonometric functions")
    
         
 class Graphical_claculator_adittional_layout(customtkinter.CTkToplevel):
     WIDTH: typing.Final[int] = 966 
     HEIGHT: typing.Final[int] = 56
-    WINDOW: typing.Final[str] = f"-toolwindow"
     TITLE: typing.Final[str] = f"My Calculus graphical calculator additional layout"
+    ICON: typing.Final[str] = f"my calculus icon.ico"
 
     def __init__(self: typing.Self, *args, **kwargs) -> None:
         customtkinter.CTkToplevel.__init__(self, *args, **kwargs)
@@ -682,7 +657,7 @@ class Graphical_claculator_adittional_layout(customtkinter.CTkToplevel):
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
         self.resizable(False, False)
         self.title(self.TITLE)
-        self.attributes(self.WINDOW, True)
+        self.after(250, lambda: self.iconbitmap(self.ICON))
 
         self.main_screen_functions_text: customtkinter.CTkLabel = customtkinter.CTkLabel(master=self, text=f"Функције", text_color=text_color, font=(f"Roboto Bold", 55))
         self.main_screen_functions_text.place(x=2, y=0)
@@ -720,12 +695,11 @@ class Graphical_claculator_adittional_layout(customtkinter.CTkToplevel):
         self.main_screen_cos_function_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"cos", height=50, width=70, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=lambda: program.__button_operation__(f"numpy.cos()"))
         self.main_screen_cos_function_button.place(x=705, y=70)  
         
-        match language_data:           
-            case "Српски": self.main_screen_functions_text.configure(text=f"Функције")
+        if locale.getdefaultlocale()[0] == f"sr_RS": self.main_screen_functions_text.configure(text=f"Функције")
 
-            case "English": self.main_screen_functions_text.configure(text=f"Functions")
+        elif locale.getdefaultlocale()[0] == f"ru_RU": self.main_screen_functions_text.configure(text=f"Функции")
 
-            case _: self.main_screen_functions_text.configure(text=f"Функции")
+        else: self.main_screen_functions_text.configure(text=f"Functions")
 
 if __name__ == f"__main__":
    program: Program = Program()
