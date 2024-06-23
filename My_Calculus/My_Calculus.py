@@ -1,5 +1,4 @@
 from math import *
-from My_Calculus_AI_window import My_Calculus_AI_window
 from My_Calculus_math_functions import *
 import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, My_Calculus_AI
 
