@@ -25,6 +25,7 @@ class My_Calculus_AI_window(customtkinter.CTkToplevel, My_Calculus_AI_window_int
 
 		self.ai_window_entry.bind(f"<Return>", self.__response_from_ai__)
 
+	@typing.override
 	def __response_from_ai__(self: typing.Self, configure: str | None = None) -> None:
 		self.ai_window_entry_data: str = self.ai_window_entry.get()
 

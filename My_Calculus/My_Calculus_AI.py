@@ -6,9 +6,10 @@ class My_Calculus_LM(My_Calculus_AI_interface.My_Calculus_AI_interface):
     PROVIDER: None = None # If you know, how to set up local provider, write it in the issue section
     
     def __init__(self: typing.Self) -> None:
-        self.my_calculus_ai_client: g4f.local.LocalClient = g4f.local.LocalClient()
+        self.my_diary_ai_client: g4f.local.LocalClient = g4f.local.LocalClient()
 
+    @typing.override
     async def __response__(self: typing.Self, prompt: str) -> str:
-        self.response = self.my_calculus_ai_client.chat.completions.create(model=self.LM, messages=[{f"role": f"user", f"content": prompt}])
+        self.response = self.my_diary_ai_client.chat.completions.create(model=self.LM, messages=[{f"role": f"user", f"content": prompt}])
         
         return self.response.choices[0].message.content

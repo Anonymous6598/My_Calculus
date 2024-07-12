@@ -1,4 +1,5 @@
 from math import *
+from My_Calculus_AI_window import My_Calculus_AI_window
 from My_Calculus_math_functions import *
 import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, My_Calculus_AI
 
@@ -144,6 +145,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
         else: self.main_screen_mode_button.configure(text=f"mode")
 
+    @typing.override
     def __classical__(self: typing.Self) -> None:
         self.main_screen_expression_entry.configure(height=120)
         self.main_screen_equal_button.configure(command=self.__equation__)
@@ -203,6 +205,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_base_option.place_forget()
         self.main_screen_x_button.grid_forget()
 
+    @typing.override
     def __scientific__(self: typing.Self) -> None: 
         self.main_screen_expression_entry.configure(height=120) 
         self.main_screen_equal_button.configure(command=self.__equation__)
@@ -258,6 +261,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
         self.main_screen_scientific_calculator_additional_layout: Scientific_calculator_additional_layout = Scientific_calculator_additional_layout()
 
+    @typing.override
     def __programming__(self: typing.Self) -> None:
         self.main_screen_expression_entry.configure(height=120)
         self.main_screen_equal_button.configure(command=self.__equation__)
@@ -311,6 +315,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_equal_button.grid_forget()
         self.main_screen_x_button.grid_forget()
     
+    @typing.override
     def __graphical__(self: typing.Self) -> None:
         self.main_screen_expression_entry.configure(height=195)
         self.main_screen_equal_button.configure(command=self.__plot__)
@@ -366,6 +371,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
         self.main_screen_graphical_calculator_additional_layout: Graphical_claculator_adittional_layout = Graphical_claculator_adittional_layout()
 
+    @typing.override
     def __button_operation__(self: typing.Self, button: str) -> None:
         self.button: str = button
         self.main_screen_expression_entry_data: str = self.main_screen_expression_entry.get()
@@ -384,7 +390,8 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
             case _:
                 self.main_screen_expression_entry.delete(f"0", tkinter.END)
                 self.main_screen_expression_entry.insert(f"0", f"{self.main_screen_expression_entry_data + self.button}")
-     
+
+    @typing.override
     def __equation__(self: typing.Self) -> None:
         self.main_screen_expression_entry_data: str = self.main_screen_expression_entry.get()
         self.main_screen_result: str = eval(f"{self.main_screen_expression_entry_data}")
@@ -399,6 +406,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
             
         self.main_screen_result_entry.configure(state=f"disabled")
 
+    @typing.override
     def __clear_everything__(self: typing.Self) -> None:
         self.main_screen_expression_entry.delete(f"0", tkinter.END)
 
@@ -406,9 +414,11 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_result_entry.delete(f"0", tkinter.END)
         self.main_screen_result_entry.configure(state=f"disabled") 
 
+    @typing.override
     def __mode_option__(self: typing.Self) -> None:
         self.main_screen_mode_option: Menu_Option = Menu_Option()
-    
+
+    @typing.override
     def __change_base__(self: typing.Self, configure: str) -> None:
         self.main_screen_count_system_result: str
         self.main_screen_expression_entry_data: str = self.main_screen_expression_entry.get()
@@ -447,7 +457,8 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         else: self.main_screen_result_entry.insert("0", f"result is {self.main_screen_count_system_result}")
             
         self.main_screen_result_entry.configure(state=f"disabled")
-    
+
+    @typing.override    
     def __plot__(self: typing.Self) -> None:
         matplotlib.pyplot.style.use(f"_mpl-gallery")
         matplotlib.pyplot.title(f"My Calculus graphical calculator")
@@ -465,19 +476,11 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         
         self.main_screen_ai_window: My_Calculus_AI_window.My_Calculus_AI_window = My_Calculus_AI_window.My_Calculus_AI_window()
 
+    @typing.override
     def __settings__(self: typing.Self) -> None:
         import My_Calculus_settings_menu
         
         self.main_screen_settings_window: My_Calculus_settings_menu.Settings_window = My_Calculus_settings_menu.Settings_window()
-       
-    def __run__(self: typing.Self) -> None:
-        try: self.mainloop()
-            
-        except FileNotFoundError: tkinter.messagebox.showerror(title=f"file not found error", message=f"срб: грешка: није нађен фајл \neng: error: missing data file \nрус: ошибка: не найден файл")
-        
-        except tkinter.TclError: tkinter.messagebox.showerror(title=f"icon file not found error", message=f"срб: грешка: није нађен фајл иконица \neng: error: missing icon file \nрус: ошибка: не найден файл с иконкой")
-        
-        except EOFError: tkinter.messagebox.showerror(title=f"corrupted file error", message=f"срб: грешка: повређен фајл \n eng: error: corrupted data file \nрус: ошибка: повреждён файл")
    
         
 class Menu_Option(customtkinter.CTkToplevel):
@@ -701,5 +704,9 @@ class Graphical_claculator_adittional_layout(customtkinter.CTkToplevel):
         else: self.main_screen_functions_text.configure(text=f"Functions")
 
 if __name__ == f"__main__":
-   program: Program = Program()
-   program.__run__()
+    try:
+        program: Program = Program()
+        program.mainloop()
+		
+    except Exception as exception:
+        tkinter.messagebox.showerror(f"error", message=f"{exception}")
