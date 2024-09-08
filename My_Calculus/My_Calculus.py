@@ -1,7 +1,6 @@
 from math import *
-from My_Calculus_AI_window import My_Calculus_AI_window
 from My_Calculus_math_functions import *
-import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, My_Calculus_AI
+import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, re
 
 with open(f"my_calculus_text_color.pickle", f"rb+") as text_color_data: text_color: str = pickle.load(text_color_data)
 
@@ -41,8 +40,12 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.main_screen_expression_entry: customtkinter.CTkEntry = customtkinter.CTkEntry(master=self.main_screen_entry_frame, width=475, height=120, fg_color=f"transparent", border_width=0, text_color=expression_entry_text_color, font=(f"Roboto Bold", 135))
         self.main_screen_expression_entry.place(x=2, y=2)
 
+        self.main_screen_expression_entry.bind("<Button-3>", lambda event: self.main_screen_right_click_expression_entry_menu.post(event.x_root, event.y_root))
+
         self.main_screen_result_entry: customtkinter.CTkEntry = customtkinter.CTkEntry(master=self.main_screen_entry_frame, width=475, height=20, fg_color=f"transparent", border_width=0, text_color=expression_entry_text_color, font=(f"Roboto Bold", 25), state=f"disabled")
         self.main_screen_result_entry.place(x=2, y=165)
+
+        self.main_screen_result_entry.bind("<Button-3>", lambda event: self.main_screen_right_click_result_entry_menu.post(event.x_root, event.y_root))
 
         self.main_screen_procent_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"%", height=50, width=60, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=lambda: self.__button_operation__(f"%"))
         self.main_screen_procent_button.grid(column=0, row=1, sticky=f"w")
@@ -137,13 +140,38 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
         self.main_screen_base_option: customtkinter.CTkComboBox = customtkinter.CTkComboBox(master=self, values=[f"binary-octal", f"binary-decimal", f"binary-hexadecimal", f"octal-binary", f"octal-decimal", f"octal-hexadecimal", f"decimal-binary", f"decimal-octal", f"decimal-hexadecimal", f"hexadecimal-binary", f"hexadecimal-octal", f"hexadecimal-decimal"], height=50, width=479.7,  fg_color=button_color, border_color=button_color, button_color=button_color, button_hover_color=button_color, dropdown_fg_color=button_color, text_color=text_color, dropdown_text_color=text_color, font=(f"Roboto Bold", 32), dropdown_font=(f"Roboto Bold", 32), command=self.__change_base__)  
 
-        self.main_screen_x_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"x", height=50, width=60, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=lambda: self.__button_operation__(f"x"))        
+        self.main_screen_x_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"x", height=50, width=60, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=lambda: self.__button_operation__(f"x"))   
 
-        if locale.getdefaultlocale()[0] == f"sr_RS": self.main_screen_mode_button.configure(text=f"режим")
+        self.main_screen_right_click_expression_entry_menu: tkinter.Menu = tkinter.Menu(self.main_screen_expression_entry, tearoff=0)
+        
+        self.main_screen_right_click_result_entry_menu: tkinter.Menu = tkinter.Menu(self.main_screen_result_entry, tearoff=0)     
 
-        elif locale.getdefaultlocale()[0] == f"ru_RU": self.main_screen_mode_button.configure(text=f"режим")
+        if locale.getdefaultlocale()[0] == f"sr_RS": 
+            self.main_screen_mode_button.configure(text=f"режим")
 
-        else: self.main_screen_mode_button.configure(text=f"mode")
+            self.main_screen_right_click_expression_entry_menu.add_command(label=f"копирај", command=self.__copy__)
+            self.main_screen_right_click_expression_entry_menu.add_command(label=f"налепи", command=self.__paste__)
+            self.main_screen_right_click_expression_entry_menu.add_command(label=f"исеци", command=self.__cut__)
+
+            self.main_screen_right_click_result_entry_menu.add_command(label=f"копирај резултат", command=self.__copy_result__)
+
+        elif locale.getdefaultlocale()[0] == f"ru_RU": 
+            self.main_screen_mode_button.configure(text=f"режим")
+
+            self.main_screen_right_click_expression_entry_menu.add_command(label=f"копировать", command=self.__copy__)
+            self.main_screen_right_click_expression_entry_menu.add_command(label=f"вставить", command=self.__paste__)
+            self.main_screen_right_click_expression_entry_menu.add_command(label=f"вырезать", command=self.__cut__)
+
+            self.main_screen_right_click_result_entry_menu.add_command(label=f"копировать результат", command=self.__copy_result__)
+
+        else: 
+            self.main_screen_mode_button.configure(text=f"mode")
+
+            self.main_screen_right_click_expression_entry_menu.add_command(label=f"copy", command=self.__copy__)
+            self.main_screen_right_click_expression_entry_menu.add_command(label=f"paste", command=self.__paste__)
+            self.main_screen_right_click_expression_entry_menu.add_command(label=f"cut", command=self.__cut__)
+
+            self.main_screen_right_click_result_entry_menu.add_command(label=f"copy result", command=self.__copy_result__)
 
     @typing.override
     def __classical__(self: typing.Self) -> None:
@@ -481,7 +509,32 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         import My_Calculus_settings_menu
         
         self.main_screen_settings_window: My_Calculus_settings_menu.Settings_window = My_Calculus_settings_menu.Settings_window()
-   
+
+    def __copy__(self: typing.Self) -> None:
+        self.selected_text: str = self.main_screen_expression_entry.selection_get()
+        self.clipboard_clear()
+        self.clipboard_append(self.selected_text)
+
+    def __paste__(self: typing.Self) -> None:
+        try:
+            self.cursor_position: int = self.main_screen_expression_entry.index(tkinter.INSERT)    
+            self.clipboard_text: str = self.clipboard_get()
+            self.main_screen_expression_entry.insert(self.cursor_position, self.clipboard_text)
+		
+        except tkinter.TclError:
+            pass
+
+    def __cut__(self: typing.Self) -> None:
+        self.selected_text: str = self.main_screen_expression_entry.selection_get()
+        self.main_screen_expression_entry.delete("sel.first", "sel.last")
+        self.clipboard_clear()
+        self.clipboard_append(self.selected_text)
+
+    def __copy_result__(self: typing.Self) -> None:
+        self.text: str = self.main_screen_result_entry.get()
+        self.numbers: list[str] = list(map(float, re.findall(f"\d+\.\d+", self.text)))
+        self.clipboard_clear()
+        self.clipboard_append(self.numbers[0])
         
 class Menu_Option(customtkinter.CTkToplevel):
 
@@ -704,9 +757,5 @@ class Graphical_claculator_adittional_layout(customtkinter.CTkToplevel):
         else: self.main_screen_functions_text.configure(text=f"Functions")
 
 if __name__ == f"__main__":
-    try:
-        program: Program = Program()
-        program.mainloop()
-		
-    except Exception as exception:
-        tkinter.messagebox.showerror(f"error", message=f"{exception}")
+    program: Program = Program()
+    program.mainloop()
