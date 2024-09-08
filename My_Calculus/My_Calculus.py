@@ -532,7 +532,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
     def __copy_result__(self: typing.Self) -> None:
         self.text: str = self.main_screen_result_entry.get()
-        self.numbers: list[str] = list(map(float, re.findall(f"\d+\.\d+", self.text)))
+        self.numbers: list[float] = list(map(float, re.findall(f"\d+\.\d+", self.text)))
         self.clipboard_clear()
         self.clipboard_append(self.numbers[0])
         
