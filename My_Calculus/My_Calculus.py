@@ -1,6 +1,6 @@
 from math import *
 from My_Calculus_math_functions import *
-import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, re
+import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, re, os, subprocess
 
 with open(f"my_calculus_text_color.pickle", f"rb+") as text_color_data: text_color: str = pickle.load(text_color_data)
 
@@ -32,7 +32,7 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.resizable(False, False)
         self.title(self.TITLE)
         self.iconbitmap(self.ICON)
-        self.protocol(f"WM_DELETE_WINDOW", lambda: sys.exit())
+        self.protocol(f"WM_DELETE_WINDOW", lambda: subprocess.call(f"TASKKILL /F /IM Python.exe", shell=False) + sys.exit())
 
         self.main_screen_entry_frame: customtkinter.CTkFrame = customtkinter.CTkFrame(master=self, width=480, height=200, fg_color=expression_entry_color)
         self.main_screen_entry_frame.grid(column=0, row=0, columnspan=5000)
@@ -563,7 +563,7 @@ class Menu_Option(customtkinter.CTkToplevel):
         self.main_screen_graphical_mode_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"графички", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__graphical__)
         self.main_screen_graphical_mode_button.grid(column=0, row=3)
 
-        self.main_screen_ai_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"AI", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__ai_window__)
+        self.main_screen_ai_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"AI", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=lambda: os.startfile(f"My_Calculus_AI_window.py", show_cmd=False))
         self.main_screen_ai_button.grid(column=0, row=4)
         
         self.main_screen_settings_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"подешавања", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__settings__)
