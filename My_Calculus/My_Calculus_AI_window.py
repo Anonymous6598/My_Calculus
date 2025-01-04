@@ -1,4 +1,4 @@
-import customtkinter, tkinter, My_Calculus_AI_window_interface, typing, asyncio, My_Calculus_AI, speech_recognition
+import customtkinter, tkinter, My_Calculus_AI_window_interface, typing, asyncio, My_Calculus_AI, speech_recognition, platform
 
 class My_Calculus_AI_window(customtkinter.CTk, My_Calculus_AI_window_interface.My_Calculus_AI_window_interface):
 	
@@ -17,11 +17,14 @@ class My_Calculus_AI_window(customtkinter.CTk, My_Calculus_AI_window_interface.M
 		customtkinter.set_default_color_theme(self.COLOR_THEME)
 		customtkinter.set_appearance_mode(self.THEME)
 		customtkinter.deactivate_automatic_dpi_awareness()
+		customtkinter.set_appearance_mode(f"dark")
 
 		self.title(self.TITLE)
 		self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
 		self.resizable(False, False)
-		self.after(250, lambda: self.iconbitmap(self.ICON))
+		
+		if platform.system() == f"Windows":
+			self.after(250, lambda: self.iconbitmap(self.ICON))
 
 		self.ai_window_textbox: customtkinter.CTkTextbox = customtkinter.CTkTextbox(master=self, height=265, width=524, corner_radius=0, fg_color=f"transparent", text_color=(f"black", f"white"))
 		self.ai_window_textbox.place(x=0, y=0)
