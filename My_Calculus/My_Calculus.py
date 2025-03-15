@@ -1,6 +1,6 @@
 from math import *
 from My_Calculus_math_functions import *
-import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, re, os, subprocess, platform, My_Calculus_settings_menu
+import customtkinter, tkinter, tkinter.messagebox, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, re, My_Calculus_AI_window
 
 with open(f"my_calculus_text_color.pickle", f"rb+") as text_color_data: text_color: str = pickle.load(text_color_data)
 
@@ -27,15 +27,12 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         customtkinter.set_widget_scaling(self.WIDGET_SCALING)
         customtkinter.set_default_color_theme(self.COLOR_THEME)
         customtkinter.deactivate_automatic_dpi_awareness()
-        customtkinter.set_appearance_mode(f"dark")
 
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
         self.resizable(False, False)
         self.title(self.TITLE)
-        self.protocol(f"WM_DELETE_WINDOW", lambda: self.__exit__())
-
-        if platform.system() == f"Windows":
-            self.iconbitmap(self.ICON)
+        self.iconbitmap(self.ICON)
+        self.protocol(f"WM_DELETE_WINDOW", lambda: sys.exit())
 
         self.main_screen_entry_frame: customtkinter.CTkFrame = customtkinter.CTkFrame(master=self, width=480, height=200, fg_color=expression_entry_color)
         self.main_screen_entry_frame.grid(column=0, row=0, columnspan=5000)
@@ -502,20 +499,16 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 
         matplotlib.pyplot.show()
         
-    def __ai_window__(self: typing.Self) -> None:        
-        if platform.system() == f"Linux":
-            os.popen(f"python3 My_Calculus_AI_window.py")
-
-        else:
-            os.startfile(f"My_Calculus_AI_window.py", show_cmd=False)
+    def __ai_window__(self: typing.Self) -> None:
+        import My_Calculus_AI_window
+        
+        self.main_screen_ai_window: My_Calculus_AI_window.My_Calculus_AI_window = My_Calculus_AI_window.My_Calculus_AI_window()
 
     @typing.override
     def __settings__(self: typing.Self) -> None:
-        if platform.system() == f"Linux":
-            os.popen(f"python3 My_Calculus_settings_menu.py")
-
-        else:
-            os.startfile(f"My_Calculus_settings_menu.py", show_cmd=False)
+        import My_Calculus_settings_menu
+        
+        self.main_screen_settings_window: My_Calculus_settings_menu.Settings_window = My_Calculus_settings_menu.Settings_window()
 
     def __copy__(self: typing.Self) -> None:
         self.selected_text: str = self.main_screen_expression_entry.selection_get()
@@ -542,14 +535,6 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
         self.numbers: list[float] = list(map(float, re.findall(f"\d+\.\d+", self.text)))
         self.clipboard_clear()
         self.clipboard_append(self.numbers[0])
-
-    def __exit__(self: typing.Self) -> None:
-        if platform.system() == f"Windows":
-            subprocess.call(f"TASKKILL /F /IM Python.exe", shell=False)
-            sys.exit()
-				
-        else:
-            sys.exit()
         
 class Menu_Option(customtkinter.CTkToplevel):
 
@@ -564,9 +549,7 @@ class Menu_Option(customtkinter.CTkToplevel):
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
         self.resizable(False, False)
         self.title(self.TITLE)
-
-        if platform.system() == f"Windows":
-            self.after(250, lambda: self.iconbitmap(self.ICON))
+        self.after(250, lambda: self.iconbitmap(self.ICON))
 
         self.main_screen_classical_mode_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"класични", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__classical__)
         self.main_screen_classical_mode_button.grid(column=0, row=0)
@@ -580,7 +563,7 @@ class Menu_Option(customtkinter.CTkToplevel):
         self.main_screen_graphical_mode_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"графички", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__graphical__)
         self.main_screen_graphical_mode_button.grid(column=0, row=3)
 
-        self.main_screen_ai_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"AI", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__ai_window__)
+        self.main_screen_ai_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"AI", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=lambda: My_Calculus_AI_window.My_Calculus_AI_window())
         self.main_screen_ai_button.grid(column=0, row=4)
         
         self.main_screen_settings_button: customtkinter.CTkButton = customtkinter.CTkButton(master=self, text=f"подешавања", height=50, width=250, fg_color=button_color, text_color=text_color, font=(f"Roboto Bold", 25), command=program.__settings__)
@@ -606,6 +589,7 @@ class Menu_Option(customtkinter.CTkToplevel):
            self.main_screen_programming_mode_button.configure(text=f"programming")
            self.main_screen_graphical_mode_button.configure(text=f"graphical")
            self.main_screen_settings_button.configure(text=f"settings")
+            
 
 class Scientific_calculator_additional_layout(customtkinter.CTkToplevel):
      
@@ -620,9 +604,7 @@ class Scientific_calculator_additional_layout(customtkinter.CTkToplevel):
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
         self.resizable(False, False)
         self.title(self.TITLE)
-        
-        if platform.system() == f"Windows":
-            self.after(250, lambda: self.iconbitmap(self.ICON))
+        self.after(250, lambda: self.iconbitmap(self.ICON))
 
         self.main_screen_functions_text: customtkinter.CTkLabel = customtkinter.CTkLabel(master=self, text=f"Функције", text_color=text_color, font=(f"Roboto Bold", 55))
         self.main_screen_functions_text.place(x=2, y=0)
@@ -730,9 +712,7 @@ class Graphical_claculator_adittional_layout(customtkinter.CTkToplevel):
         self.minsize(width=self.WIDTH, height=self.HEIGHT)
         self.resizable(False, False)
         self.title(self.TITLE)
-        
-        if platform.system() == f"Windows":
-            self.after(250, lambda: self.iconbitmap(self.ICON))
+        self.after(250, lambda: self.iconbitmap(self.ICON))
 
         self.main_screen_functions_text: customtkinter.CTkLabel = customtkinter.CTkLabel(master=self, text=f"Функције", text_color=text_color, font=(f"Roboto Bold", 55))
         self.main_screen_functions_text.place(x=2, y=0)
