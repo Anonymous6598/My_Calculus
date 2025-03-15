@@ -1,5 +1,5 @@
 # My_Calculus
-This is casual calculator. It can change base of the number, draw plots and calculate. But you can сustomize it by changing colors of almost everything. And now with Llama 3.1 Supernova Lite model assistant, which can help you with complex mathematical tasks. Embrace the future. 
+This is casual calculator. It can change base of the number, draw plots and calculate. But you can сustomize it by changing colors of almost everything. And now with Open AI GPT-4o-mini model assistant, which can help you with complex mathematical tasks. Embrace the future. 
 
 ## Windows
 
