@@ -3,7 +3,7 @@ This is casual calculator. It can change base of the number, draw plots and calc
 
 ## Windows
 
-![Screenshot 2024-06-29 072154](https://github.com/Anonymous6598/My_Calculus/assets/121385046/4c0a8cc1-7bfb-402e-9267-cb2275c9fbc6)
+![Snimak ekrana 2025-03-15 214508](https://github.com/user-attachments/assets/f264cdd3-b553-4cfe-ad89-6dc8a92cac43)
 
 ## Linux
 
