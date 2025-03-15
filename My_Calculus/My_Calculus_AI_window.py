@@ -1,6 +1,6 @@
-import customtkinter, tkinter, My_Calculus_AI_window_interface, typing, asyncio, My_Calculus_AI, speech_recognition, platform
+import customtkinter, tkinter, My_Calculus_AI_window_interface, typing, My_Calculus_AI, speech_recognition
 
-class My_Calculus_AI_window(customtkinter.CTk, My_Calculus_AI_window_interface.My_Calculus_AI_window_interface):
+class My_Calculus_AI_window(customtkinter.CTkToplevel, My_Calculus_AI_window_interface.My_Calculus_AI_window_interface):
 	
 	HEIGHT: typing.Final[int] = 375
 	WIDTH: typing.Final[int] = 655
@@ -11,20 +11,17 @@ class My_Calculus_AI_window(customtkinter.CTk, My_Calculus_AI_window_interface.M
 	THEME: typing.Final[str] = f"system"
 
 	def __init__(self: typing.Self, *args, **kwargs) -> None:
-		customtkinter.CTk.__init__(self, *args, **kwargs)
+		customtkinter.CTkToplevel.__init__(self, *args, **kwargs)
 
 		customtkinter.set_widget_scaling(self.WIDGET_SCALING)
 		customtkinter.set_default_color_theme(self.COLOR_THEME)
 		customtkinter.set_appearance_mode(self.THEME)
 		customtkinter.deactivate_automatic_dpi_awareness()
-		customtkinter.set_appearance_mode(f"dark")
 
 		self.title(self.TITLE)
 		self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
 		self.resizable(False, False)
-		
-		if platform.system() == f"Windows":
-			self.after(250, lambda: self.iconbitmap(self.ICON))
+		self.after(250, lambda: self.iconbitmap(self.ICON))
 
 		self.ai_window_textbox: customtkinter.CTkTextbox = customtkinter.CTkTextbox(master=self, height=265, width=524, corner_radius=0, fg_color=f"transparent", text_color=(f"black", f"white"))
 		self.ai_window_textbox.place(x=0, y=0)
@@ -47,9 +44,9 @@ class My_Calculus_AI_window(customtkinter.CTk, My_Calculus_AI_window_interface.M
 		self.ai_window_entry_data: str = self.ai_window_entry.get()
 
 		self.ai_window_textbox.configure(state=f"normal")
-		self.query: str = asyncio.run(My_Calculus_AI.My_Calculus_LM().__response__(self.ai_window_entry_data))
+		self.query: str = My_Calculus_AI.My_Calculus_LM().__response__(self.ai_window_entry_data)
 
-		self.ai_window_textbox.insert(tkinter.END, f"{self.query}\n", f"-1.0")
+		self.ai_window_textbox.insert(tkinter.END, f"USER:\n{self.ai_window_entry_data}\nGPT-4o-mini:\n{self.query}\n", f"-1.0")
 		self.ai_window_textbox.configure(state=f"disabled")
 		self.ai_window_entry.delete(f"-1", tkinter.END)
 
@@ -60,6 +57,3 @@ class My_Calculus_AI_window(customtkinter.CTk, My_Calculus_AI_window_interface.M
 			self.text: str = self.recognizer.recognize_google(self.audio_data)
 
 		self.ai_window_entry.insert(f"0", self.text)
-
-if __name__ == f"__main__":
-	My_Calculus_AI_window().mainloop()

@@ -1,4 +1,4 @@
-import customtkinter, tkinter.messagebox, pickle, typing, My_Calculus_settings_window_interface, locale, platform
+import customtkinter, tkinter.messagebox, pickle, typing, My_Calculus_settings_window_interface, My_Calculus, locale
 
 with open(f"my_calculus_text_color.pickle", f"rb+") as text_color_data: text_color: str = pickle.load(text_color_data)
 
@@ -8,7 +8,7 @@ with open(f"my_calculus_expression_entry_text_color.pickle", f"rb+") as expressi
 
 with open(f"my_calculus_button_color.pickle", f"rb+") as button_color_data: button_color: str = pickle.load(button_color_data)
 
-class Settings_window(customtkinter.CTk, My_Calculus_settings_window_interface.My_Calculus_settings_window_interface):
+class Settings_window(customtkinter.CTkToplevel, My_Calculus_settings_window_interface.My_Calculus_settings_window_interface):
      
     WIDTH: typing.Final[int] = 655 
     HEIGHT: typing.Final[int] = 571
@@ -16,16 +16,12 @@ class Settings_window(customtkinter.CTk, My_Calculus_settings_window_interface.M
     ICON: typing.Final[str] = f"my calculus icon.ico"
 
     def __init__(self, *args, **kwargs) -> None:
-        customtkinter.CTk.__init__(self, *args, **kwargs)
-
-        customtkinter.set_appearance_mode(f"dark")
+        customtkinter.CTkToplevel.__init__(self, *args, **kwargs)
 
         self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
         self.resizable(False, False)
         self.title(self.TITLE)
-        
-        if platform.system() == f"Windows":
-            self.after(250, lambda: self.iconbitmap(self.ICON))
+        self.after(250, lambda: self.iconbitmap(self.ICON))
         
         self.main_screen_settings_customatization_text: customtkinter.CTkLabel = customtkinter.CTkLabel(master=self, text=f"Спољни изглед", text_color=text_color, font=(f"Roboto Bold", 36))
         self.main_screen_settings_customatization_text.place(x=15, y=1)
@@ -136,5 +132,4 @@ class Settings_window(customtkinter.CTk, My_Calculus_settings_window_interface.M
 
         else: tkinter.messagebox.showwarning(title=f"Warning", message=f"Restart program")
 
-if __name__ == f"__main__":
-    Settings_window().mainloop()
+program: My_Calculus.Program = My_Calculus.Program()
