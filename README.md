@@ -7,8 +7,7 @@ This is casual calculator. It can change base of the number, draw plots and calc
 
 ## Linux
 
-![Снимак екрана од 2025-01-04 01-08-12](https://github.com/user-attachments/assets/93ab1efc-90e8-447c-8813-3cce0c2b7178)
-
+![Снимак екрана од 2025-03-31 01-57-12](https://github.com/user-attachments/assets/9b9f8afb-582d-45d3-ae10-770ce3af5c06)
 
 (Everything is in serbian)
 
