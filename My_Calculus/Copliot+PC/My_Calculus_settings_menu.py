@@ -67,69 +67,34 @@ class Settings_window(customtkinter.CTkToplevel, My_Calculus_settings_window_int
 
         self.main_screen_settings_customatization_button_color_option.set(button_color)
 
-        if locale.getdefaultlocale()[0] == f"sr_RS": 
-            self.main_screen_settings_customatization_text.configure(text=f"Спољни изглед")
-            self.main_screen_settings_customatization_text_color_text.configure(text=f"Боја текста")
-            self.main_screen_settings_customatization_expression_entry_color_text.configure(text=f"Боја поља")
-            self.main_screen_settings_customatization_expression_entry_color_text_color_text.configure(text=f"Боја текста поља")
-            self.main_screen_settings_customatization_button_color_text.configure(text=f"Боја дугма")
-
-        elif locale.getdefaultlocale()[0] == f"ru_RU":
-            self.main_screen_settings_customatization_text.configure(text="Внешний вид")
-            self.main_screen_settings_customatization_text_color_text.configure(text="Цвет текста")
-            self.main_screen_settings_customatization_expression_entry_color_text.configure(text="Цвет поля")
-            self.main_screen_settings_customatization_expression_entry_color_text.configure(text="Цвет текста поля")
-            self.main_screen_settings_customatization_button_color_text.configure(text="Цвет кнопки")
-
-        else:
-            self.main_screen_settings_customatization_text.configure(text=f"Customatization")
-            self.main_screen_settings_customatization_text_color_text.configure(text=f"Text color")
-            self.main_screen_settings_customatization_expression_entry_color_text.configure(text=f"Expression entry color")
-            self.main_screen_settings_customatization_expression_entry_color_text.configure(text=f"Expression entry text color")
-            self.main_screen_settings_customatization_button_color_text.configure(text=f"Button color")
+        self.main_screen_settings_customatization_text.configure(text=f"Customatization")
+        self.main_screen_settings_customatization_text_color_text.configure(text=f"Text color")
+        self.main_screen_settings_customatization_expression_entry_color_text.configure(text=f"Expression entry color")
+        self.main_screen_settings_customatization_expression_entry_color_text.configure(text=f"Expression entry text color")
+        self.main_screen_settings_customatization_button_color_text.configure(text=f"Button color")
     
     @typing.override
     def __change_text_color__(self, pickle_serializer: pickle) -> None:
         self.main_screen_settings_customatization_text_color_option_data: str = self.main_screen_settings_customatization_text_color_option.get()
         with open(f"my_calculus_text_color.pickle", f"wb+") as self.text_color_data: pickle.dump(self.main_screen_settings_customatization_text_color_option_data, self.text_color_data)            
- 
-        if locale.getdefaultlocale()[0] == f"sr_RS": tkinter.messagebox.showwarning(title=f"Пажња", message=f"Рестартуј програм")
-            
-        elif locale.getdefaultlocale()[0] == f"ru_RU": tkinter.messagebox.showwarning(title=f"Внимание", message=f"Перезагрузите программу")
-
-        else: tkinter.messagebox.showwarning(title=f"Warning", message=f"Restart program")
+        tkinter.messagebox.showwarning(title=f"Warning", message=f"Restart program")
 
     @typing.override
     def __change_expression_entry_color__(self, pickle_serialization: pickle) -> None:
         self.main_screen_settings_customatization_expression_entry_color_option_data: str = self.main_screen_settings_customatization_expression_entry_color_option.get()
         with open(f"my_calculus_expression_entry_color.pickle", f"wb+") as self.expression_entry_color_data: pickle.dump(self.main_screen_settings_customatization_expression_entry_color_option_data, self.expression_entry_color_data)
-
-        if locale.getdefaultlocale()[0] == f"sr_RS": tkinter.messagebox.showwarning(title=f"Пажња", message=f"Рестартуј програм")
-            
-        elif locale.getdefaultlocale()[0] == f"ru_RU": tkinter.messagebox.showwarning(title=f"Внимание", message=f"Перезагрузите программу")
-
-        else: tkinter.messagebox.showwarning(title=f"Warning", message=f"Restart program")
+        tkinter.messagebox.showwarning(title=f"Warning", message=f"Restart program")
 
     @typing.override
     def __change_expression_entry_text_color__(self, pickle_serialization: pickle) -> None:
         self.main_screen_settings_customatization_expression_entry_text_color_option_data: str = self.main_screen_settings_customatization_expression_entry_text_color_option.get()
         with open(f"my_calculus_expression_entry_text_color.pickle", f"wb+") as self.expression_entry_text_color_data: pickle.dump(self.main_screen_settings_customatization_expression_entry_text_color_option_data, self.expression_entry_text_color_data)
-
-        if locale.getdefaultlocale()[0] == f"sr_RS": tkinter.messagebox.showwarning(title=f"Пажња", message=f"Рестартуј програм")
-            
-        elif locale.getdefaultlocale()[0] == f"ru_RU": tkinter.messagebox.showwarning(title=f"Внимание", message=f"Перезагрузите программу")
-
-        else: tkinter.messagebox.showwarning(title=f"Warning", message=f"Restart program")
+        tkinter.messagebox.showwarning(title=f"Warning", message=f"Restart program")
 
     @typing.override
     def __change_button_color__(self, pickle_serialization: pickle) -> None:
         self.main_screen_settings_customatization_button_color_option_data: str = self.main_screen_settings_customatization_button_color_option.get()
         with open(f"my_calculus_button_color.pickle", f"wb+") as self.button_color_data: pickle.dump(self.main_screen_settings_customatization_button_color_option_data, self.button_color_data)
-
-        if locale.getdefaultlocale()[0] == f"sr_RS": tkinter.messagebox.showwarning(title=f"Пажња", message=f"Рестартуј програм")
-            
-        elif locale.getdefaultlocale()[0] == f"ru_RU": tkinter.messagebox.showwarning(title=f"Внимание", message=f"Перезагрузите программу")
-
-        else: tkinter.messagebox.showwarning(title=f"Warning", message=f"Restart program")
+        tkinter.messagebox.showwarning(title=f"Warning", message=f"Restart program")
 
 program: My_Calculus.Program = My_Calculus.Program()
