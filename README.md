@@ -20,7 +20,7 @@ This is casual calculator. It can change base of the number, draw plots and calc
 >
 > Specs for laptop to run app:
 > - Intel Core Ultra proccesors
-> - 8 gb of ram (16 gb is recommended)
+> - 2 gb of ram (4 gb is recommended)
 
 (Everything is in serbian)
 
