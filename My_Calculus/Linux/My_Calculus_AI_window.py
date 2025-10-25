@@ -46,6 +46,7 @@ class My_Calculus_AI_window(customtkinter.CTkToplevel, My_Calculus_AI_window_int
 		self.ai_window_textbox.configure(state=f"disabled")
 		self.ai_window_entry.delete(f"-1", tkinter.END)
 
+	@typing.override
 	def __audio_input__(self: typing.Self) -> None:
 		self.recognizer: speech_recognition.Recognizer = speech_recognition.Recognizer()
 		with speech_recognition.Microphone() as self.source:
