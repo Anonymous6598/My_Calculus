@@ -475,7 +475,8 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 		matplotlib.pyplot.plot(x, y, linewidth=1.0)
 
 		matplotlib.pyplot.show()
-		
+
+	@typing.override
 	def __ai_window__(self: typing.Self) -> None:        
 		self.main_screen_ai_window: My_Calculus_AI_window = My_Calculus_AI_window()
 
@@ -485,11 +486,13 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 		
 		self.main_screen_settings_window: My_Calculus_settings_menu.Settings_window = My_Calculus_settings_menu.Settings_window()
 
+	@typing.override
 	def __copy__(self: typing.Self) -> None:
 		self.selected_text: str = self.main_screen_expression_entry.selection_get()
 		self.clipboard_clear()
 		self.clipboard_append(self.selected_text)
 
+	@typing.override
 	def __paste__(self: typing.Self) -> None:
 		try:
 			self.cursor_position: int = self.main_screen_expression_entry.index(tkinter.INSERT)    
@@ -499,12 +502,14 @@ class Program(customtkinter.CTk, My_Calculus_interface.My_Calculus_interface):
 		except tkinter.TclError:
 			pass
 
+	@typing.override
 	def __cut__(self: typing.Self) -> None:
 		self.selected_text: str = self.main_screen_expression_entry.selection_get()
 		self.main_screen_expression_entry.delete(f"sel.first", f"sel.last")
 		self.clipboard_clear()
 		self.clipboard_append(self.selected_text)
 
+	@typing.override
 	def __copy_result__(self: typing.Self) -> None:
 		self.text: str = self.main_screen_result_entry.get()
 		self.numbers: list[float] = list(map(float, re.findall(fr"\d+\.\d+", self.text)))
@@ -758,7 +763,8 @@ class My_Calculus_AI_window(customtkinter.CTkToplevel, My_Calculus_AI_window_int
 			self.after(0, update_gui)
 
 		threading.Thread(target=run_model).start()
-	  
+
+	@typing.override
 	def __audio_input__(self: typing.Self) -> None:
 		self.recognizer: speech_recognition.Recognizer = speech_recognition.Recognizer()
 		with speech_recognition.Microphone() as self.source:
@@ -769,4 +775,5 @@ class My_Calculus_AI_window(customtkinter.CTkToplevel, My_Calculus_AI_window_int
 
 if __name__ == f"__main__":
 	program: Program = Program()
+
 	program.mainloop()
