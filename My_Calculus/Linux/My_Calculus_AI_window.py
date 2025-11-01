@@ -42,7 +42,7 @@ class My_Calculus_AI_window(customtkinter.CTkToplevel, My_Calculus_AI_window_int
 		self.ai_window_textbox.configure(state=f"normal")
 		self.query: str = My_Calculus_AI.My_Calculus_LM().__response__(self.ai_window_entry_data)
 
-		self.ai_window_textbox.insert(tkinter.END, f"USER:\n{self.ai_window_entry_data}\nGPT-4o:\n{self.query}\n", f"-1.0")
+		self.ai_window_textbox.insert(tkinter.END, f"USER:\n{self.ai_window_entry_data}\nGPT-4:\n{self.query}\n", f"-1.0")
 		self.ai_window_textbox.configure(state=f"disabled")
 		self.ai_window_entry.delete(f"-1", tkinter.END)
 
