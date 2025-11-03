@@ -1,5 +1,5 @@
 # My_Calculus
-This is casual calculator. It can change base of the number, draw plots and calculate. But you can сustomize it by changing colors of almost everything. And now with Open AI GPT-4o (Llama3.2) model assistant, which can help you with complex mathematical tasks. Embrace the future. And now it supports Copilot+PC laptops!
+This is casual calculator. It can change base of the number, draw plots and calculate. But you can сustomize it by changing colors of almost everything. And now with Open AI GPT-4 (Llama3.2) model assistant, which can help you with complex mathematical tasks. Embrace the future. And now it supports Copilot+PC laptops!
 
 ## Windows
 
