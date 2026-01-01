@@ -22,7 +22,7 @@ class My_Calculus_LM(My_Calculus_AI_interface.My_Calculus_AI_interface):
         self.config.temperature = 0.3
         self.config.top_p = 0.5
         self.config.top_k = 1
-        self.config.repetition_penalty = 1.0
+        self.config.repetition_penalty = 1.1
         self.config.num_return_sequences = 1
         self.config.num_beams = 1
         self.config.num_return_sequences = 1
