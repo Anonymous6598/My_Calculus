@@ -1,6 +1,6 @@
 from math import *
 from My_Calculus_math_functions import *
-import customtkinter, tkinter, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, re, warnings, My_Calculus_AI_window_interface, My_Calculus_AI, speech_recognition, threading
+import customtkinter, tkinter, pickle, unicodedata, sys, numpy, matplotlib, matplotlib.pyplot, typing, My_Calculus_interface, locale, re, warnings, My_Calculus_AI_window_interface, My_Calculus_AI, speech_recognition, threading, ctk_markdown
 
 with open(f"my_calculus_text_color.pickle", f"rb+") as text_color_data: text_color: str = pickle.load(text_color_data)
 
@@ -731,7 +731,7 @@ class My_Calculus_AI_window(customtkinter.CTkToplevel, My_Calculus_AI_window_int
 		self.resizable(False, False)
 		self.after(250, lambda: self.iconbitmap(self.ICON))
 
-		self.ai_window_textbox: customtkinter.CTkTextbox = customtkinter.CTkTextbox(master=self, height=265, width=524, corner_radius=0, fg_color=f"transparent", text_color=(f"black", f"white"))
+		self.ai_window_textbox: ctk_markdown.CTkMarkdown = ctk_markdown.CTkMarkdown(master=self, height=265, width=524, corner_radius=0, fg_color=f"transparent", text_color=(f"black", f"white"))
 		self.ai_window_textbox.place(x=0, y=0)
 
 		self.ai_window_textbox.configure(state=f"disabled")
@@ -757,6 +757,7 @@ class My_Calculus_AI_window(customtkinter.CTkToplevel, My_Calculus_AI_window_int
 			def update_gui():
 				self.ai_window_textbox.configure(state="normal")
 				self.ai_window_textbox.insert(tkinter.END, f"USER:\n{self.ai_window_entry_data}\nLlama:\n{response_text}\n")
+				self.ai_window_textbox.set_markdown(self.ai_window_textbox.get(f"1.0", tkinter.END))
 				self.ai_window_textbox.configure(state="disabled")
 				self.ai_window_entry.delete(0, tkinter.END)
 
